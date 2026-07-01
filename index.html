@@ -345,7 +345,7 @@
             background: #1f2c38;
             border-radius: 12px;
             margin-top: 4px;
-            max-height: 200px;
+            max-height: 250px;
             overflow-y: auto;
             z-index: 100;
             border: 1px solid #2b3b4a;
@@ -381,11 +381,15 @@
         #searchRow .search-results .result-item .result-name {
             color: #e1e9f0;
             font-size: 14px;
+            flex: 1;
         }
         #searchRow .search-results .result-item .result-type {
             color: #8e9fb1;
-            font-size: 12px;
+            font-size: 11px;
             margin-left: auto;
+            padding: 2px 8px;
+            background: #0e1621;
+            border-radius: 10px;
         }
         #addBtn {
             background: #2b5278;
@@ -578,10 +582,6 @@
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        @keyframes fadeOut {
-            from { opacity: 1; transform: scale(1); }
-            to { opacity: 0; transform: scale(0.8); }
-        }
         .msg.own {
             align-self: flex-end;
             background: #2b5278;
@@ -619,6 +619,7 @@
             border-radius: 50%;
             object-fit: cover;
             border: 2px solid #64b5f6;
+            display: block;
         }
         .msg .file-container {
             background: #0e1621;
@@ -955,6 +956,9 @@
             cursor: pointer;
             flex: 1;
         }
+        .btn-record:hover, .btn-stop:hover {
+            transform: scale(1.02);
+        }
         @media (max-width: 700px) {
             #sidebar { width: 100%; border-right: none; }
             #chatArea { display: none; }
@@ -1034,7 +1038,7 @@
                 <button class="logout-btn" id="logoutBtn">⏻</button>
             </div>
             <div id="searchRow">
-                <input type="text" id="searchInput" placeholder="Поиск чатов и пользователей..." />
+                <input type="text" id="searchInput" placeholder="Поиск чатов, каналов, людей..." />
                 <div class="search-results" id="searchResults"></div>
                 <button id="addBtn">+</button>
             </div>
@@ -1435,7 +1439,7 @@
                 }
             } else if (msg.video) {
                 if (msg.isCircle) {
-                    content += `<video class="circle-video" src="${msg.video}" controls loop style="width:180px;height:180px;border-radius:50%;object-fit:cover;border:2px solid #64b5f6;"></video>`;
+                    content += `<video class="circle-video" src="${msg.video}" controls loop></video>`;
                 } else {
                     content += `<video src="${msg.video}" controls style="max-width:100%;border-radius:12px;"></video>`;
                 }
@@ -1447,7 +1451,7 @@
                 content = '📌 ' + content;
             }
             
-            // Кнопка удаления (только для своих сообщений и сообщений в чатах, не системных)
+            // Кнопка удаления
             if (!isSystem && (isOwn || (chat.type === 'channel' && chat.isOwner))) {
                 const deleteBtn = `<button class="msg-delete-btn ${isOwn ? 'delete-own' : ''}" data-msg-id="${msg.id}" title="Удалить сообщение">✕</button>`;
                 div.innerHTML = deleteBtn + content + `<div class="time">${formatTime(msg.time)}</div>`;
@@ -1666,60 +1670,107 @@
         return true;
     }
 
-    // ======== SEARCH USERS ========
-    function searchUsers(query) {
+    // ======== SEARCH ========
+    function performSearch(query) {
         if (!query || query.length < 2) {
             document.getElementById('searchResults').classList.remove('show');
             return;
         }
         
-        const results = state.allUsers.filter(u => 
-            u.id !== state.user.id && 
-            u.name.toLowerCase().includes(query.toLowerCase())
-        );
+        const q = query.toLowerCase();
+        const results = [];
+        
+        // Поиск чатов и каналов
+        state.chats.forEach(chat => {
+            if (chat.name.toLowerCase().includes(q)) {
+                results.push({
+                    id: chat.id,
+                    name: chat.name,
+                    type: chat.type || 'chat',
+                    avatar: chat.avatar || chat.name.charAt(0).toUpperCase(),
+                    color: chat.avatarColor || '#2b5278',
+                    isChat: true
+                });
+            }
+        });
+        
+        // Поиск пользователей (кроме себя)
+        state.allUsers.forEach(user => {
+            if (user.id !== state.user.id && user.name.toLowerCase().includes(q)) {
+                // Проверяем, есть ли уже чат с этим пользователем
+                const existingChat = state.chats.find(c => 
+                    c.type === 'chat' && 
+                    c.participants && 
+                    c.participants.includes(user.id) && 
+                    c.participants.includes(state.user.id)
+                );
+                results.push({
+                    id: user.id,
+                    name: user.name,
+                    type: 'user',
+                    avatar: user.name.charAt(0).toUpperCase(),
+                    color: user.avatarColor || '#2b5278',
+                    isChat: false,
+                    existingChatId: existingChat ? existingChat.id : null
+                });
+            }
+        });
+        
+        // Ограничиваем количество результатов
+        const limited = results.slice(0, 10);
         
         const container = document.getElementById('searchResults');
         container.innerHTML = '';
         
-        if (results.length === 0) {
-            container.innerHTML = '<div style="padding:10px 14px;color:#8e9fb1;">Пользователи не найдены</div>';
+        if (limited.length === 0) {
+            container.innerHTML = '<div style="padding:10px 14px;color:#8e9fb1;">Ничего не найдено</div>';
         } else {
-            results.forEach(user => {
+            limited.forEach(item => {
                 const div = document.createElement('div');
                 div.className = 'result-item';
+                
+                let typeLabel = '';
+                if (item.type === 'channel') typeLabel = '📢 Канал';
+                else if (item.type === 'group') typeLabel = '👥 Группа';
+                else if (item.type === 'user') typeLabel = '👤 Пользователь';
+                else typeLabel = '💬 Чат';
+                
                 div.innerHTML = `
-                    <div class="result-avatar" style="background:${user.avatarColor || '#2b5278'}">${user.name.charAt(0).toUpperCase()}</div>
-                    <span class="result-name">${user.name}</span>
-                    <span class="result-type">👤 Пользователь</span>
+                    <div class="result-avatar" style="background:${item.color}">${item.avatar}</div>
+                    <span class="result-name">${item.name}</span>
+                    <span class="result-type">${typeLabel}</span>
                 `;
+                
                 div.addEventListener('click', () => {
-                    // Создаем личный чат с пользователем
-                    const chatName = user.name;
-                    const existing = state.chats.find(c => 
-                        c.type === 'chat' && 
-                        c.participants && 
-                        c.participants.includes(user.id) && 
-                        c.participants.includes(state.user.id)
-                    );
-                    if (existing) {
-                        state.currentChatId = existing.id;
-                    } else {
-                        const newChat = {
-                            id: generateId(),
-                            type: 'chat',
-                            name: chatName,
-                            avatar: user.name.charAt(0).toUpperCase(),
-                            avatarColor: '#' + Math.floor(Math.random()*16777215).toString(16).padStart(6,'0'),
-                            participants: [state.user.id, user.id],
-                            participantNames: [state.user.name, user.name],
-                            messages: [],
-                            folderId: null,
-                            unread: 0,
-                            isBot: false,
-                            created: Date.now(),
-                        };
-                        state.chats.push(newChat);
-                        state.currentChatId = newChat.id;
+                    if (item.isChat) {
+                        // Открываем существующий чат/канал/группу
+                        state.currentChatId = item.id;
+                    } else if (item.type === 'user') {
+                        // Пользователь
+                        if (item.existingChatId) {
+                            state.currentChatId = item.existingChatId;
+                        } else {
+                            // Создаем новый личный чат
+                            const user = state.allUsers.find(u => u.id === item.id);
+                            if (user) {
+                                const newChat = {
+                                    id: generateId(),
+                                    type: 'chat',
+                                    name: user.name,
+                                    avatar: user.name.charAt(0).toUpperCase(),
+                                    avatarColor: user.avatarColor || '#' + Math.floor(Math.random()*16777215).toString(16).padStart(6,'0'),
+                                    participants: [state.user.id, user.id],
+                                    participantNames: [state.user.name, user.name],
+                                    messages: [],
+                                    folderId: null,
+                                    unread: 0,
+                                    isBot: false,
+                                    created: Date.now(),
+                                };
+                                state.chats.push(newChat);
+                                state.currentChatId = newChat.id;
+                            }
+                        }
                     }
                     document.getElementById('searchInput').value = '';
                     document.getElementById('searchResults').classList.remove('show');
@@ -1873,7 +1924,7 @@
                 messages: [{ 
                     id: '1', 
                     sender: 'bot', 
-                    text: '🎉 Добро пожаловать в Tlim!\n\nЗдесь ты можешь:\n• Создавать каналы и группы\n• Отправлять видео и кружки\n• Отправлять файлы 📎\n• Общаться с DeepSeek Bot\n• Группировать чаты в папки\n• Искать пользователей в поиске\n\nНажми +, чтобы начать!', 
+                    text: '🎉 Добро пожаловать в Tlim!\n\nЗдесь ты можешь:\n• Создавать каналы и группы\n• Отправлять видео и кружки\n• Отправлять файлы 📎\n• Общаться с DeepSeek Bot\n• Группировать чаты в папки\n• Искать чаты, каналы и людей\n\nНажми +, чтобы начать!', 
                     time: Date.now(), 
                     isBot: true 
                 }],
@@ -2064,7 +2115,6 @@
 
     function showCreateGroup() {
         let selectedUsers = [];
-        const searchInput = document.getElementById('searchUsersInput');
         
         function renderGroupModal() {
             const allUsersHtml = state.allUsers
@@ -2125,25 +2175,17 @@
                             }
                         });
                     });
-                    
-                    resultsDiv.querySelectorAll('.user-search-result').forEach(el => {
-                        el.addEventListener('click', (e) => {
-                            if (e.target.classList.contains('add-btn')) return;
-                            const btn = el.querySelector('.add-btn');
-                            if (btn) btn.click();
-                        });
-                    });
                 }
             }
 
             searchInput.addEventListener('input', updateSearchResults);
             updateSearchResults();
 
-            document.addEventListener('click', function handler(e) {
-                if (e.target.classList.contains('remove-btn')) {
-                    selectedUsers = selectedUsers.filter(u => u.id !== e.target.dataset.id);
+            document.querySelectorAll('.remove-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    selectedUsers = selectedUsers.filter(u => u.id !== btn.dataset.id);
                     renderGroupModal();
-                }
+                });
             });
 
             document.getElementById('confirmGroupBtn').addEventListener('click', () => {
@@ -2239,7 +2281,10 @@
                 state.circleChunks = [];
 
                 startBtn.onclick = () => {
-                    if (!state.circleStream) return;
+                    if (!state.circleStream) {
+                        alert('Нет доступа к камере');
+                        return;
+                    }
                     state.circleChunks = [];
                     const recorder = new MediaRecorder(state.circleStream, { mimeType: 'video/webm;codecs=vp8,opus' });
                     state.circleRecorder = recorder;
@@ -2248,14 +2293,17 @@
                     };
                     recorder.onstop = () => {
                         const blob = new Blob(state.circleChunks, { type: 'video/webm' });
-                        const reader = new FileReader();
-                        reader.onload = (ev) => {
-                            if (state.circleChunks.length) {
+                        if (blob.size > 0) {
+                            const reader = new FileReader();
+                            reader.onload = (ev) => {
                                 sendMessage(null, ev.target.result, true, null);
-                            }
+                                closeCircleRecorder();
+                            };
+                            reader.readAsDataURL(blob);
+                        } else {
+                            alert('Запись не удалась. Попробуйте ещё раз.');
                             closeCircleRecorder();
-                        };
-                        reader.readAsDataURL(blob);
+                        }
                         state.circleChunks = [];
                     };
                     recorder.start(1000);
@@ -2276,7 +2324,7 @@
                 document.getElementById('circleCancelBtn').onclick = closeCircleRecorder;
             })
             .catch(err => {
-                alert('Ошибка доступа к камере: ' + err.message + '\nПожалуйста, разрешите доступ к камере и микрофону.');
+                alert('❌ Ошибка доступа к камере:\n' + err.message + '\n\nПожалуйста, разрешите доступ к камере и микрофону в браузере.');
                 closeCircleRecorder();
             });
     }
@@ -2302,6 +2350,7 @@
         document.getElementById('circleRecorder').style.display = 'none';
         document.getElementById('inputRow').style.display = 'flex';
         document.getElementById('circlePreview').srcObject = null;
+        state.circleChunks = [];
     }
 
     // ======== UI HELPERS ========
@@ -2399,11 +2448,11 @@
 
         document.getElementById('logoutBtn').addEventListener('click', logout);
 
-        // Search users
+        // SEARCH - главное исправление!
         document.getElementById('searchInput').addEventListener('input', (e) => {
             const query = e.target.value.trim();
             if (query.length >= 2) {
-                searchUsers(query);
+                performSearch(query);
             } else {
                 document.getElementById('searchResults').classList.remove('show');
             }
@@ -2418,7 +2467,7 @@
         document.getElementById('searchInput').addEventListener('focus', () => {
             const query = document.getElementById('searchInput').value.trim();
             if (query.length >= 2) {
-                searchUsers(query);
+                performSearch(query);
             }
         });
 
