@@ -5,19 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Tlim</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-        }
-        body {
-            background: #0e1621;
-            color: #e1e9f0;
-            height: 100vh;
-            overflow: hidden;
-        }
-
+        /* ===== БАЗОВЫЕ СТИЛИ ===== */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+        body { background: #0e1621; color: #e1e9f0; height: 100vh; overflow: hidden; }
+        
         /* ===== LOGIN ===== */
         #loginScreen {
             display: flex;
@@ -58,9 +49,7 @@
             outline: 1px solid #64b5f6;
             background: #1f2c38;
         }
-        .login-box input::placeholder {
-            color: #8e9fb1;
-        }
+        .login-box input::placeholder { color: #8e9fb1; }
         .login-box .btn-primary {
             width: 100%;
             padding: 14px;
@@ -73,9 +62,7 @@
             cursor: pointer;
             margin-top: 4px;
         }
-        .login-box .btn-primary:hover {
-            background: #4da3e0;
-        }
+        .login-box .btn-primary:hover { background: #4da3e0; }
         .login-box .btn-secondary {
             width: 100%;
             padding: 12px;
@@ -87,10 +74,7 @@
             cursor: pointer;
             margin-top: 8px;
         }
-        .login-box .btn-secondary:hover {
-            background: #3a4a5a;
-            color: #fff;
-        }
+        .login-box .btn-secondary:hover { background: #3a4a5a; color: #fff; }
         .error-msg { color: #f28b82; font-size: 14px; margin-top: 10px; text-align: center; }
         .success-msg { color: #7cff9e; font-size: 14px; margin-top: 10px; text-align: center; }
         .info-msg { color: #64b5f6; font-size: 13px; margin-top: 8px; text-align: center; cursor: pointer; }
@@ -289,15 +273,15 @@
             height: 100%;
         }
         #desktopLayout .desktop-sidebar .sidebar-header {
-            padding: 14px 16px;
+            padding: 10px 14px;
             border-bottom: 1px solid #2b3b4a;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
             flex-shrink: 0;
         }
         #desktopLayout .desktop-sidebar .sidebar-header .tlim-logo {
-            font-size: 22px;
+            font-size: 20px;
             font-weight: 800;
             color: #64b5f6;
         }
@@ -307,9 +291,9 @@
             color: #0e1621;
             border: none;
             border-radius: 50%;
-            width: 32px;
-            height: 32px;
-            font-size: 20px;
+            width: 30px;
+            height: 30px;
+            font-size: 18px;
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -323,7 +307,7 @@
         #desktopLayout .desktop-sidebar .chat-list-scroll {
             flex: 1;
             overflow-y: auto;
-            padding: 8px 0;
+            padding: 4px 0;
         }
         #desktopLayout .desktop-chat {
             flex: 1;
@@ -352,7 +336,7 @@
         #mobileLayout #chatListContainer {
             flex: 1;
             overflow-y: auto;
-            padding: 8px 0;
+            padding: 4px 0;
             background: #17212b;
         }
         #mobileLayout #bottomBar {
@@ -416,28 +400,65 @@
             to { transform: translateY(0); opacity: 1; }
         }
 
+        /* ===== FOLDERS ===== */
+        #foldersBar {
+            display: flex;
+            gap: 4px;
+            padding: 4px 10px;
+            border-bottom: 1px solid #2b3b4a;
+            flex-wrap: wrap;
+            background: #0e1621;
+            flex-shrink: 0;
+            overflow-x: auto;
+        }
+        #foldersBar .folder-chip {
+            background: #1f2c38;
+            padding: 4px 12px;
+            border-radius: 14px;
+            font-size: 12px;
+            cursor: pointer;
+            color: #8e9fb1;
+            border: 1px solid transparent;
+            transition: 0.2s;
+            white-space: nowrap;
+        }
+        #foldersBar .folder-chip:hover { background: #2b3b4a; }
+        #foldersBar .folder-chip.active {
+            background: #2b5278;
+            color: #fff;
+            border-color: #64b5f6;
+        }
+        #foldersBar .folder-chip .folder-remove {
+            background: none;
+            border: none;
+            color: #f28b82;
+            cursor: pointer;
+            font-size: 12px;
+            margin-left: 4px;
+            padding: 0 2px;
+        }
+        #foldersBar .folder-chip .folder-remove:hover { color: #ff6b6b; }
+
         /* ===== CHAT LIST ===== */
         .chat-item {
             display: flex;
             align-items: center;
-            padding: 10px 14px;
+            padding: 8px 12px;
             gap: 10px;
             cursor: pointer;
             border-bottom: 1px solid #1f2c38;
             transition: 0.1s;
         }
-        .chat-item:hover {
-            background: #1f2c38;
-        }
+        .chat-item:hover { background: #1f2c38; }
         .chat-avatar {
-            width: 44px;
-            height: 44px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: bold;
-            font-size: 18px;
+            font-size: 16px;
             color: #fff;
             flex-shrink: 0;
             background: #2b5278;
@@ -455,29 +476,23 @@
             right: 0;
             background: #f39c12;
             border-radius: 50%;
-            width: 16px;
-            height: 16px;
-            font-size: 8px;
+            width: 14px;
+            height: 14px;
+            font-size: 7px;
             display: flex;
             align-items: center;
             justify-content: center;
             border: 2px solid #17212b;
         }
-        .chat-info {
-            flex: 1;
-            min-width: 0;
-        }
+        .chat-info { flex: 1; min-width: 0; }
         .chat-name {
             font-weight: 500;
-            font-size: 15px;
+            font-size: 14px;
             display: flex;
             align-items: center;
             gap: 4px;
         }
-        .chat-name .private-icon {
-            font-size: 12px;
-            color: #f39c12;
-        }
+        .chat-name .private-icon { font-size: 11px; color: #f39c12; }
         .chat-last {
             font-size: 12px;
             color: #8e9fb1;
@@ -549,18 +564,9 @@
             height: 100%;
             object-fit: cover;
         }
-        #chatViewHeader .cv-info {
-            flex: 1;
-            min-width: 0;
-        }
-        #chatViewHeader .cv-name {
-            font-weight: 600;
-            font-size: 16px;
-        }
-        #chatViewHeader .cv-status {
-            font-size: 11px;
-            color: #8e9fb1;
-        }
+        #chatViewHeader .cv-info { flex: 1; min-width: 0; }
+        #chatViewHeader .cv-name { font-weight: 600; font-size: 16px; }
+        #chatViewHeader .cv-status { font-size: 11px; color: #8e9fb1; }
 
         #pinnedBar {
             display: none;
@@ -572,9 +578,7 @@
             flex-shrink: 0;
             cursor: pointer;
         }
-        #pinnedBar.show {
-            display: flex;
-        }
+        #pinnedBar.show { display: flex; }
         #pinnedBar .pinned-icon { color: #64b5f6; font-size: 14px; }
         #pinnedBar .pinned-text { flex: 1; font-size: 13px; color: #e1e9f0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         #pinnedBar .pinned-arrow { color: #8e9fb1; font-size: 13px; }
@@ -628,17 +632,74 @@
         .msg video { max-width: 100%; border-radius: 10px; display: block; margin-top: 4px; max-height: 280px; }
         .msg .circle-video { width: 140px; height: 140px; border-radius: 50%; object-fit: cover; border: 2px solid #64b5f6; }
         .msg img { max-width: 100%; border-radius: 10px; display: block; margin-top: 4px; max-height: 350px; object-fit: contain; }
-        .msg .audio-container { display: flex; align-items: center; gap: 8px; background: #0e1621; padding: 4px 10px; border-radius: 16px; border: 1px solid #2b3b4a; min-width: 160px; }
-        .msg .audio-container .play-btn { background: #2b5278; border: none; border-radius: 50%; width: 28px; height: 28px; color: #fff; font-size: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-        .msg .audio-container .audio-progress { flex: 1; height: 3px; background: #2b3b4a; border-radius: 2px; cursor: pointer; position: relative; }
-        .msg .audio-container .audio-progress .audio-fill { height: 100%; background: #64b5f6; border-radius: 2px; width: 0%; transition: width 0.1s; }
-        .msg .audio-container .audio-time { font-size: 10px; color: #8e9fb1; min-width: 35px; text-align: center; }
-        .msg .file-container { background: #0e1621; border-radius: 10px; padding: 8px; display: flex; align-items: center; gap: 8px; border: 1px solid #2b3b4a; cursor: pointer; }
+        .msg .audio-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #0e1621;
+            padding: 4px 10px;
+            border-radius: 16px;
+            border: 1px solid #2b3b4a;
+            min-width: 160px;
+        }
+        .msg .audio-container .play-btn {
+            background: #2b5278;
+            border: none;
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            color: #fff;
+            font-size: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .msg .audio-container .audio-progress {
+            flex: 1;
+            height: 3px;
+            background: #2b3b4a;
+            border-radius: 2px;
+            cursor: pointer;
+            position: relative;
+        }
+        .msg .audio-container .audio-progress .audio-fill {
+            height: 100%;
+            background: #64b5f6;
+            border-radius: 2px;
+            width: 0%;
+            transition: width 0.1s;
+        }
+        .msg .audio-container .audio-time {
+            font-size: 10px;
+            color: #8e9fb1;
+            min-width: 35px;
+            text-align: center;
+        }
+        .msg .file-container {
+            background: #0e1621;
+            border-radius: 10px;
+            padding: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border: 1px solid #2b3b4a;
+            cursor: pointer;
+        }
         .msg .file-container .file-icon { font-size: 24px; }
         .msg .file-container .file-info { flex: 1; min-width: 0; }
         .msg .file-container .file-name { font-size: 12px; font-weight: 500; }
         .msg .file-container .file-size { font-size: 10px; color: #8e9fb1; }
-        .msg .file-container .download-btn { background: #2b5278; border: none; color: #fff; padding: 4px 10px; border-radius: 6px; cursor: pointer; font-size: 11px; }
+        .msg .file-container .download-btn {
+            background: #2b5278;
+            border: none;
+            color: #fff;
+            padding: 4px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 11px;
+        }
 
         .msg-actions {
             display: flex;
@@ -649,9 +710,7 @@
             opacity: 0;
             transition: 0.2s;
         }
-        .msg:hover .msg-actions {
-            opacity: 1;
-        }
+        .msg:hover .msg-actions { opacity: 1; }
         .msg-actions button {
             background: #2b3b4a;
             border: none;
@@ -666,9 +725,7 @@
             justify-content: center;
             transition: 0.2s;
         }
-        .msg-actions button:hover {
-            transform: scale(1.1);
-        }
+        .msg-actions button:hover { transform: scale(1.1); }
         .msg-actions .pin-btn { background: #2b5278; }
         .msg-actions .pin-btn.pinned { background: #64b5f6; color: #0e1621; }
         .msg-actions .delete-btn { background: #f28b82; color: #0e1621; }
@@ -704,9 +761,7 @@
             border-radius: 50%;
             transition: 0.2s;
         }
-        #inputRow .input-wrapper .btn-icon:active {
-            background: #2b3b4a;
-        }
+        #inputRow .input-wrapper .btn-icon:active { background: #2b3b4a; }
         #inputRow .input-wrapper input {
             flex: 1;
             background: transparent;
@@ -717,9 +772,7 @@
             outline: none;
             min-width: 50px;
         }
-        #inputRow .input-wrapper input::placeholder {
-            color: #6b7f8f;
-        }
+        #inputRow .input-wrapper input::placeholder { color: #6b7f8f; }
         #inputRow .btn-send {
             background: #64b5f6;
             border: none;
@@ -754,15 +807,51 @@
             flex-shrink: 0;
         }
         #voiceRecordBar.show { display: flex; }
-        #voiceRecordBar .voice-timer { color: #f28b82; font-weight: bold; font-size: 14px; min-width: 50px; }
-        #voiceRecordBar .voice-wave { flex: 1; height: 24px; display: flex; align-items: center; gap: 3px; }
-        #voiceRecordBar .voice-wave span { display: block; width: 3px; background: #64b5f6; border-radius: 2px; animation: wave 0.5s infinite alternate; }
+        #voiceRecordBar .voice-timer {
+            color: #f28b82;
+            font-weight: bold;
+            font-size: 14px;
+            min-width: 50px;
+        }
+        #voiceRecordBar .voice-wave {
+            flex: 1;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            gap: 3px;
+        }
+        #voiceRecordBar .voice-wave span {
+            display: block;
+            width: 3px;
+            background: #64b5f6;
+            border-radius: 2px;
+            animation: wave 0.5s infinite alternate;
+        }
         @keyframes wave {
             0% { height: 4px; }
             100% { height: 20px; }
         }
-        #voiceRecordBar .voice-cancel-btn { background: none; border: none; color: #f28b82; font-size: 18px; cursor: pointer; padding: 4px; }
-        #voiceRecordBar .voice-send-btn { background: #64b5f6; border: none; border-radius: 50%; width: 32px; height: 32px; color: #0e1621; font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        #voiceRecordBar .voice-cancel-btn {
+            background: none;
+            border: none;
+            color: #f28b82;
+            font-size: 18px;
+            cursor: pointer;
+            padding: 4px;
+        }
+        #voiceRecordBar .voice-send-btn {
+            background: #64b5f6;
+            border: none;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            color: #0e1621;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
         #filePreviewBar {
             display: none;
@@ -778,7 +867,14 @@
         #filePreviewBar .file-preview-info .file-icon { font-size: 18px; }
         #filePreviewBar .file-preview-info .file-name { font-size: 12px; color: #e1e9f0; }
         #filePreviewBar .file-preview-info .file-size { font-size: 10px; color: #8e9fb1; }
-        #filePreviewBar .remove-file-btn { background: none; border: none; color: #f28b82; font-size: 16px; cursor: pointer; padding: 0 4px; }
+        #filePreviewBar .remove-file-btn {
+            background: none;
+            border: none;
+            color: #f28b82;
+            font-size: 16px;
+            cursor: pointer;
+            padding: 0 4px;
+        }
 
         #circleRecorder {
             display: none;
@@ -789,7 +885,14 @@
         }
         #circleRecorder video { width: 100%; border-radius: 12px; max-height: 180px; background: #000; }
         #circleRecorder .record-controls { display: flex; gap: 8px; margin-top: 6px; }
-        #circleRecorder .record-controls button { flex: 1; padding: 8px; border: none; border-radius: 10px; font-weight: 600; cursor: pointer; }
+        #circleRecorder .record-controls button {
+            flex: 1;
+            padding: 8px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+        }
         #circleRecorder .record-controls .btn-record { background: #f28b82; color: #0e1621; }
         #circleRecorder .record-controls .btn-stop { background: #64b5f6; color: #0e1621; }
         #circleRecorder .record-controls .btn-secondary { background: #2b3b4a; color: #fff; }
@@ -854,9 +957,7 @@
             transition: 0.2s;
             margin-top: 4px;
         }
-        .modal .btn-primary:hover {
-            background: #4da3e0;
-        }
+        .modal .btn-primary:hover { background: #4da3e0; }
         .modal .btn-secondary {
             background: #2b3b4a;
             color: #fff;
@@ -905,9 +1006,7 @@
             cursor: pointer;
             font-size: 13px;
         }
-        .modal .avatar-upload .avatar-btn:hover {
-            background: #3a6b94;
-        }
+        .modal .avatar-upload .avatar-btn:hover { background: #3a6b94; }
         .modal .create-buttons {
             display: flex;
             flex-direction: column;
@@ -924,9 +1023,7 @@
             text-align: left;
             padding-left: 16px;
         }
-        .modal .create-buttons button:hover {
-            transform: scale(1.02);
-        }
+        .modal .create-buttons button:hover { transform: scale(1.02); }
         .modal .create-buttons .btn-channel { background: #f39c12; color: #0e1621; }
         .modal .create-buttons .btn-group { background: #2ecc71; color: #0e1621; }
         .modal .create-buttons .btn-folder { background: #9b59b6; color: #fff; }
@@ -940,9 +1037,7 @@
             align-items: center;
             cursor: pointer;
         }
-        .modal .user-search-result:hover {
-            background: #2b3b4a;
-        }
+        .modal .user-search-result:hover { background: #2b3b4a; }
         .modal .user-search-result .add-btn {
             background: #2b5278;
             border: none;
@@ -983,94 +1078,41 @@
 
         /* ===== АДАПТИВ ===== */
         @media (min-width: 769px) {
-            #mainApp {
-                flex-direction: column !important;
-            }
-            #mobileLayout {
-                display: none !important;
-            }
-            #desktopLayout {
-                display: flex !important;
-            }
-            #topHeader .header-left .user-name {
-                font-size: 16px;
-            }
-            #topHeader .header-center {
-                max-width: 350px;
-            }
+            #mainApp { flex-direction: column !important; }
+            #mobileLayout { display: none !important; }
+            #desktopLayout { display: flex !important; }
+            #topHeader .header-left .user-name { font-size: 16px; }
+            #topHeader .header-center { max-width: 350px; }
         }
-
         @media (max-width: 768px) {
-            #mainApp {
-                flex-direction: column !important;
-            }
-            #mobileLayout {
-                display: flex !important;
-            }
-            #desktopLayout {
-                display: none !important;
-            }
-            #topHeader .header-left .user-name {
-                display: none;
-            }
-            #topHeader .header-center {
-                max-width: 100%;
-                margin: 0 8px;
-            }
+            #mainApp { flex-direction: column !important; }
+            #mobileLayout { display: flex !important; }
+            #desktopLayout { display: none !important; }
+            #topHeader .header-left .user-name { display: none; }
+            #topHeader .header-center { max-width: 100%; margin: 0 8px; }
             #topHeader .header-center .search-input {
                 padding: 4px 12px 4px 32px;
                 font-size: 13px;
                 background-size: 14px;
                 background-position: 8px center;
             }
-            .chat-avatar {
-                width: 40px;
-                height: 40px;
-                font-size: 16px;
-            }
-            .chat-name {
-                font-size: 14px;
-            }
-            .msg {
-                max-width: 85%;
-                padding: 6px 10px;
-            }
-            .msg .msg-text {
-                font-size: 13px;
-            }
-            #chatViewHeader {
-                padding: 6px 10px;
-                min-height: 44px;
-            }
-            #chatViewHeader .cv-name {
-                font-size: 15px;
-            }
-            #inputRow {
-                padding: 4px 8px 8px;
-            }
-            #inputRow .input-wrapper input {
-                font-size: 13px;
-            }
-            #inputRow .btn-send {
-                width: 34px;
-                height: 34px;
-                font-size: 16px;
-            }
-            #bottomBar .bottom-btn {
-                padding: 4px 10px;
-                font-size: 14px;
-            }
-            #bottomBar .bottom-btn .btn-label {
-                font-size: 11px;
-            }
+            .chat-avatar { width: 36px; height: 36px; font-size: 14px; }
+            .chat-name { font-size: 13px; }
+            .msg { max-width: 85%; padding: 6px 10px; }
+            .msg .msg-text { font-size: 13px; }
+            #chatViewHeader { padding: 6px 10px; min-height: 44px; }
+            #chatViewHeader .cv-name { font-size: 15px; }
+            #inputRow { padding: 4px 8px 8px; }
+            #inputRow .input-wrapper input { font-size: 13px; }
+            #inputRow .btn-send { width: 34px; height: 34px; font-size: 16px; }
+            #bottomBar .bottom-btn { padding: 4px 10px; font-size: 14px; }
+            #bottomBar .bottom-btn .btn-label { font-size: 11px; }
+            #foldersBar { padding: 4px 8px; gap: 4px; }
+            #foldersBar .folder-chip { font-size: 11px; padding: 3px 10px; }
         }
         @media (max-width: 400px) {
-            #bottomBar .bottom-btn .btn-label {
-                display: none;
-            }
-            #bottomBar .bottom-btn {
-                padding: 6px 12px;
-            }
+            #bottomBar .bottom-btn .btn-label { display: none; }
+            #bottomBar .bottom-btn { padding: 6px 12px; }
         }
     </style>
 </head>
@@ -1148,6 +1190,7 @@
                     <span class="tlim-logo">Tlim</span>
                     <button class="tlim-plus" id="desktopAddBtn">➕</button>
                 </div>
+                <div id="foldersBar"></div>
                 <div class="chat-list-scroll" id="chatListScroll">
                     <div id="chatList"></div>
                 </div>
@@ -1213,6 +1256,7 @@
 
         <!-- МОБИЛЬНАЯ ВЁРСТКА -->
         <div id="mobileLayout">
+            <div id="foldersBar"></div>
             <div id="chatListContainer">
                 <div id="chatList"></div>
             </div>
@@ -1339,6 +1383,7 @@
         user: null,
         chats: [],
         folders: [],
+        currentFolderId: null,
         currentChatId: null,
         allUsers: [],
         pendingUser: null,
@@ -1367,6 +1412,7 @@
                 state.user = parsed.user || null;
                 state.chats = parsed.chats || [];
                 state.folders = parsed.folders || [];
+                state.currentFolderId = parsed.currentFolderId || null;
                 state.currentChatId = parsed.currentChatId || null;
                 state.botChatId = parsed.botChatId || null;
                 state.allUsers = parsed.allUsers || [];
@@ -1384,6 +1430,7 @@
                 user: state.user,
                 chats: state.chats,
                 folders: state.folders,
+                currentFolderId: state.currentFolderId,
                 currentChatId: state.currentChatId,
                 botChatId: state.botChatId,
                 allUsers: state.allUsers,
@@ -1395,7 +1442,17 @@
     // ======== HELPERS ========
     function generateId() { return Date.now().toString(36) + Math.random().toString(36).substring(2,6); }
     function getChat(id) { return state.chats.find(c => c.id === id); }
-    function getChatsForDisplay() { return state.chats; }
+    function getFolder(id) { return state.folders.find(f => f.id === id); }
+    function getChatsForDisplay() {
+        let list = state.chats;
+        if (state.currentFolderId) {
+            const folder = getFolder(state.currentFolderId);
+            if (folder) {
+                list = state.chats.filter(c => folder.chatIds.includes(c.id));
+            }
+        }
+        return list;
+    }
     function getChatName(chat) {
         let name = chat.name;
         if (chat.type === 'channel') name = '📢 ' + name;
@@ -1471,11 +1528,14 @@
         saveState();
     }
 
-    // ======== SEARCH ========
+    // ======== ПОИСК ========
     function performGlobalSearch(query) {
         const resultsContainer = document.getElementById('searchResults');
+        
+        // Если запрос пустой - скрываем результаты
         if (!query || query.length < 1) {
             resultsContainer.classList.remove('show');
+            resultsContainer.innerHTML = '';
             return;
         }
 
@@ -1485,7 +1545,7 @@
 
         // Поиск пользователей
         state.allUsers.forEach(user => {
-            if (user.id !== state.user.id && user.name.toLowerCase().includes(q)) {
+            if (user.id !== state.user?.id && user.name.toLowerCase().includes(q)) {
                 if (!seen.has(user.id)) {
                     seen.add(user.id);
                     results.push({
@@ -1496,6 +1556,7 @@
                         avatarColor: user.avatarColor || '#2b5278',
                         description: user.description || 'Пользователь',
                         isPrivate: false,
+                        isChat: false,
                     });
                 }
             }
@@ -1514,6 +1575,7 @@
                         avatarColor: chat.avatarColor || '#f39c12',
                         description: chat.description || 'Канал',
                         isPrivate: chat.isPrivate || false,
+                        isChat: true,
                     });
                 }
             }
@@ -1532,6 +1594,7 @@
                         avatarColor: chat.avatarColor || '#2ecc71',
                         description: chat.description || 'Группа',
                         isPrivate: chat.isPrivate || false,
+                        isChat: true,
                     });
                 }
             }
@@ -1550,6 +1613,7 @@
                         avatarColor: chat.avatarColor || '#2b5278',
                         description: 'Личный чат',
                         isPrivate: false,
+                        isChat: true,
                     });
                 }
             }
@@ -1563,21 +1627,30 @@
             results.slice(0, 12).forEach(item => {
                 const div = document.createElement('div');
                 div.className = 'search-result-item';
+                
+                // Определяем аватар
                 let avatarContent = item.avatar;
                 if (typeof item.avatar === 'string' && item.avatar.startsWith('data:image')) {
                     avatarContent = '<img src="' + item.avatar + '" alt="avatar" />';
+                } else if (item.type === 'user') {
+                    avatarContent = item.name.charAt(0).toUpperCase();
                 }
+                
                 const privateBadge = item.isPrivate ? ' 🔒' : '';
+                const typeLabel = item.type === 'user' ? '👤' : item.type === 'channel' ? '📢' : item.type === 'group' ? '👥' : '💬';
+                
                 div.innerHTML = `
                     <div class="sr-avatar" style="background:${item.avatarColor}">${avatarContent}</div>
                     <div class="sr-info">
                         <div class="sr-name">${item.name}${privateBadge}</div>
                         <div class="sr-desc">${item.description}</div>
                     </div>
-                    <span class="sr-type">${item.type === 'user' ? '👤' : item.type === 'channel' ? '📢' : item.type === 'group' ? '👥' : '💬'}</span>
+                    <span class="sr-type">${typeLabel}</span>
                 `;
+                
                 div.addEventListener('click', () => {
                     if (item.type === 'user') {
+                        // Поиск пользователя и создание чата
                         const user = state.allUsers.find(u => u.id === item.id);
                         if (user) {
                             const existing = state.chats.find(c => 
@@ -1610,10 +1683,11 @@
                                 renderAll();
                             }
                         }
-                    } else {
+                    } else if (item.isChat) {
                         openChat(item.id);
                     }
                     resultsContainer.classList.remove('show');
+                    resultsContainer.innerHTML = '';
                     document.getElementById('globalSearchInput').value = '';
                 });
                 resultsContainer.appendChild(div);
@@ -1621,6 +1695,54 @@
         }
 
         resultsContainer.classList.add('show');
+    }
+
+    // ======== RENDER FOLDERS ========
+    function renderFolders() {
+        const bar = document.getElementById('foldersBar');
+        let html = `<span class="folder-chip ${!state.currentFolderId ? 'active' : ''}" data-folder="all">📁 Все</span>`;
+        state.folders.forEach(f => {
+            const isActive = state.currentFolderId === f.id;
+            html += `<span class="folder-chip ${isActive ? 'active' : ''}" data-folder="${f.id}">
+                📂 ${f.name}
+                <button class="folder-remove" data-folder="${f.id}" title="Удалить папку">✕</button>
+            </span>`;
+        });
+        bar.innerHTML = html;
+        
+        bar.querySelectorAll('.folder-chip').forEach(el => {
+            el.addEventListener('click', (e) => {
+                if (e.target.classList.contains('folder-remove')) return;
+                const folderId = el.dataset.folder;
+                if (folderId === 'all') {
+                    state.currentFolderId = null;
+                } else {
+                    state.currentFolderId = folderId;
+                }
+                saveState();
+                renderAll();
+            });
+        });
+        
+        bar.querySelectorAll('.folder-remove').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const folderId = btn.dataset.folder;
+                if (confirm('Удалить папку?')) {
+                    const folder = getFolder(folderId);
+                    if (folder) {
+                        folder.chatIds.forEach(cid => {
+                            const chat = getChat(cid);
+                            if (chat) chat.folderId = null;
+                        });
+                        state.folders = state.folders.filter(f => f.id !== folderId);
+                        if (state.currentFolderId === folderId) state.currentFolderId = null;
+                        saveState();
+                        renderAll();
+                    }
+                }
+            });
+        });
     }
 
     // ======== RENDER ========
@@ -1634,7 +1756,9 @@
         });
         container.innerHTML = '';
         if (!list.length) {
-            container.innerHTML = '<div style="color:#8e9fb1;text-align:center;padding:40px 20px;">Нет чатов<br>Нажмите + чтобы создать</div>';
+            const folder = state.currentFolderId ? getFolder(state.currentFolderId) : null;
+            const msg = folder ? 'В этой папке нет чатов' : 'Нет чатов<br>Нажмите + чтобы создать';
+            container.innerHTML = '<div style="color:#8e9fb1;text-align:center;padding:40px 20px;">' + msg + '</div>';
             return;
         }
         list.forEach(chat => {
@@ -1655,7 +1779,6 @@
                 if (lastText.length > 30) lastText = lastText.substring(0, 30) + '...';
             }
             let avatarContent = chat.avatarImg ? '<img src="' + chat.avatarImg + '" alt="avatar" />' : getChatAvatar(chat);
-            const privateIcon = chat.isPrivate ? '<span class="private-icon">🔒</span>' : '';
             const pinnedCount = (chat.pinnedMessages || []).length;
             div.innerHTML = `
                 <div class="chat-avatar" style="background:${chat.avatarColor || '#2b5278'}">
@@ -1950,6 +2073,7 @@
     }
 
     function renderAll() {
+        renderFolders();
         renderChatList();
         if (state.currentChatId) {
             renderMessages();
@@ -2710,23 +2834,24 @@
     }
 
     function showCreateFolder() {
-        let checkboxes = state.chats.map(c => `
-            <label style="display:flex;align-items:center;gap:6px;background:#1f2c38;padding:6px 12px;border-radius:16px;font-size:13px;cursor:pointer;">
-                <input type="checkbox" value="${c.id}" /> ${getChatName(c)}
-            </label>
-        `).join('');
-        if (!state.chats.length) checkboxes = '<div style="color:#8e9fb1;">Нет чатов для добавления</div>';
         openModal('Создать папку', `
             <input type="text" id="folderName" placeholder="Название папки" />
             <div style="margin:10px 0;color:#8e9fb1;">Выберите чаты для папки:</div>
-            <div style="display:flex;flex-wrap:wrap;gap:6px;max-height:150px;overflow-y:auto;">${checkboxes}</div>
+            <div style="display:flex;flex-wrap:wrap;gap:6px;max-height:150px;overflow-y:auto;" id="folderChatsList">
+                ${state.chats.map(c => `
+                    <label style="display:flex;align-items:center;gap:6px;background:#1f2c38;padding:6px 12px;border-radius:16px;font-size:13px;cursor:pointer;">
+                        <input type="checkbox" value="${c.id}" /> ${getChatName(c)}
+                    </label>
+                `).join('')}
+            </div>
             <button class="btn-primary" id="confirmFolderBtn">Создать папку</button>
         `);
+        
         document.getElementById('confirmFolderBtn').addEventListener('click', () => {
             const name = document.getElementById('folderName').value.trim();
             if (!name) { alert('Введите название папки'); return; }
             const selected = [];
-            document.querySelectorAll('#modalBody input[type="checkbox"]:checked').forEach(cb => {
+            document.querySelectorAll('#folderChatsList input[type="checkbox"]:checked').forEach(cb => {
                 selected.push(cb.value);
             });
             if (selected.length === 0) { alert('Выберите хотя бы один чат'); return; }
@@ -2830,15 +2955,31 @@
         document.getElementById('backBtn').addEventListener('click', closeChat);
         document.getElementById('backBtnMobile').addEventListener('click', closeChat);
 
-        // Global search
+        // ===== ГЛАВНОЕ: ПОИСК =====
         const searchInput = document.getElementById('globalSearchInput');
-        searchInput.addEventListener('input', (e) => {
-            performGlobalSearch(e.target.value.trim());
+        
+        // Очищаем результаты при потере фокуса
+        searchInput.addEventListener('blur', () => {
+            setTimeout(() => {
+                document.getElementById('searchResults').classList.remove('show');
+            }, 200);
         });
+        
+        // Поиск при вводе
+        searchInput.addEventListener('input', (e) => {
+            const val = e.target.value.trim();
+            performGlobalSearch(val);
+        });
+        
+        // Поиск при фокусе (если есть текст)
         searchInput.addEventListener('focus', () => {
             const val = searchInput.value.trim();
-            if (val.length > 0) performGlobalSearch(val);
+            if (val.length > 0) {
+                performGlobalSearch(val);
+            }
         });
+
+        // Закрытие поиска при клике вне
         document.addEventListener('click', (e) => {
             if (!e.target.closest('.header-center')) {
                 document.getElementById('searchResults').classList.remove('show');
