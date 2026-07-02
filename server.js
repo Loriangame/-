@@ -9,6 +9,7 @@ const PORT = process.env.PORT || 3000;
 // Разрешаем запросы с любых доменов
 app.use(cors());
 app.use(express.json({ limit: '50mb' }));
+app.use(express.static('.'));
 
 // Файл для хранения данных
 const DATA_FILE = path.join(__dirname, 'data.json');
@@ -35,6 +36,7 @@ function saveData(data) {
 
 // Регистрация
 app.post('/api/register', (req, res) => {
+    console.log('📝 Регистрация:', req.body);
     const { name, email, password } = req.body;
     const data = loadData();
     
@@ -54,11 +56,13 @@ app.post('/api/register', (req, res) => {
     data.users.push(user);
     saveData(data);
     
+    console.log('✅ Пользователь создан:', user.name);
     res.json({ success: true, user: { id: user.id, name: user.name, email: user.email } });
 });
 
 // Вход
 app.post('/api/login', (req, res) => {
+    console.log('🔑 Вход:', req.body);
     const { name, password } = req.body;
     const data = loadData();
     
@@ -67,6 +71,7 @@ app.post('/api/login', (req, res) => {
         return res.status(400).json({ error: 'Неверное имя или пароль' });
     }
     
+    console.log('✅ Вход выполнен:', user.name);
     res.json({ success: true, user: { id: user.id, name: user.name, email: user.email } });
 });
 
@@ -87,6 +92,7 @@ app.get('/api/chats/:userId', (req, res) => {
 
 // Создать чат
 app.post('/api/chats', (req, res) => {
+    console.log('💬 Создание чата:', req.body);
     const { name, type, participants, creator, isPrivate } = req.body;
     const data = loadData();
     
@@ -94,7 +100,7 @@ app.post('/api/chats', (req, res) => {
         id: Date.now().toString(36) + Math.random().toString(36).substring(2, 6),
         name: name,
         type: type || 'chat',
-        participants: participants,
+        participants: participants || [],
         isPrivate: isPrivate || false,
         created: Date.now(),
         creator: creator,
@@ -108,6 +114,7 @@ app.post('/api/chats', (req, res) => {
 
 // Отправить сообщение
 app.post('/api/messages', (req, res) => {
+    console.log('📨 Сообщение:', req.body);
     const { chatId, sender, text, video, file, audio } = req.body;
     const data = loadData();
     
@@ -141,9 +148,6 @@ app.get('/api/messages/:chatId', (req, res) => {
     res.json(chat.messages);
 });
 
-// Статический файл для фронтенда
-app.use(express.static('.'));
-
 app.listen(PORT, () => {
-    console.log(`🚀 Сервер запущен на порту ${PORT}`);
+    console.log(`🚀 Сервер запущен на http://localhost:${PORT}`);
 });
