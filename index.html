@@ -91,21 +91,109 @@
             background: #3a4a5a;
             color: #fff;
         }
-        .error-msg { color: #f28b82; font-size: 14px; margin-top: 10px; text-align: center; }
-        .success-msg { color: #7cff9e; font-size: 14px; margin-top: 10px; text-align: center; }
-        .info-msg { color: #64b5f6; font-size: 13px; margin-top: 8px; text-align: center; cursor: pointer; }
-        .tab-buttons { display: flex; gap: 8px; margin-bottom: 16px; }
-        .tab-buttons button { flex: 1; padding: 10px; background: #1f2c38; border: none; border-radius: 12px; color: #8e9fb1; cursor: pointer; font-size: 15px; font-weight: 500; }
-        .tab-buttons button.active { background: #2b5278; color: #fff; }
-        .code-display { background: #0e1621; padding: 15px; border-radius: 12px; text-align: center; margin: 15px 0; border: 2px dashed #64b5f6; }
-        .code-display .code { font-size: 32px; font-weight: bold; color: #64b5f6; letter-spacing: 8px; font-family: 'Courier New', monospace; }
-        .code-input-group { display: flex; gap: 10px; margin: 15px 0; }
-        .code-input-group input { flex: 1; text-align: center; font-size: 24px; letter-spacing: 4px; font-family: 'Courier New', monospace; margin-bottom: 0; }
-        .code-input-group button { padding: 14px 20px; background: #2b5278; border: none; border-radius: 12px; color: #fff; font-weight: 600; cursor: pointer; }
-        .password-toggle { position: relative; }
-        .password-toggle .toggle-btn { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: none; border: none; color: #8e9fb1; cursor: pointer; font-size: 18px; }
-        .hidden { display: none !important; }
-        .copy-btn { background: #2b5278; border: none; color: #fff; padding: 4px 12px; border-radius: 8px; cursor: pointer; font-size: 12px; margin-left: 10px; }
+        .error-msg {
+            color: #f28b82;
+            font-size: 14px;
+            margin-top: 10px;
+            text-align: center;
+        }
+        .success-msg {
+            color: #7cff9e;
+            font-size: 14px;
+            margin-top: 10px;
+            text-align: center;
+        }
+        .info-msg {
+            color: #64b5f6;
+            font-size: 13px;
+            margin-top: 8px;
+            text-align: center;
+            cursor: pointer;
+        }
+        .tab-buttons {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+        .tab-buttons button {
+            flex: 1;
+            padding: 10px;
+            background: #1f2c38;
+            border: none;
+            border-radius: 12px;
+            color: #8e9fb1;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 500;
+        }
+        .tab-buttons button.active {
+            background: #2b5278;
+            color: #fff;
+        }
+        .code-display {
+            background: #0e1621;
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+            margin: 15px 0;
+            border: 2px dashed #64b5f6;
+        }
+        .code-display .code {
+            font-size: 32px;
+            font-weight: bold;
+            color: #64b5f6;
+            letter-spacing: 8px;
+            font-family: 'Courier New', monospace;
+        }
+        .code-input-group {
+            display: flex;
+            gap: 10px;
+            margin: 15px 0;
+        }
+        .code-input-group input {
+            flex: 1;
+            text-align: center;
+            font-size: 24px;
+            letter-spacing: 4px;
+            font-family: 'Courier New', monospace;
+            margin-bottom: 0;
+        }
+        .code-input-group button {
+            padding: 14px 20px;
+            background: #2b5278;
+            border: none;
+            border-radius: 12px;
+            color: #fff;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .password-toggle {
+            position: relative;
+        }
+        .password-toggle .toggle-btn {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #8e9fb1;
+            cursor: pointer;
+            font-size: 18px;
+        }
+        .hidden {
+            display: none !important;
+        }
+        .copy-btn {
+            background: #2b5278;
+            border: none;
+            color: #fff;
+            padding: 4px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 12px;
+            margin-left: 10px;
+        }
 
         /* ===== MAIN APP ===== */
         #mainApp {
@@ -197,7 +285,7 @@
             overflow-y: auto;
             z-index: 100;
             border: 1px solid #2b3b4a;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
         }
         #topHeader .header-center #searchResults.show {
             display: block;
@@ -412,8 +500,14 @@
         }
 
         @keyframes slideUp {
-            from { transform: translateY(30px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
+            from {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
         }
 
         /* ===== FOLDERS ===== */
@@ -1586,7 +1680,7 @@
     </div>
 
     <script>
-        // ======== ПРОСТОЙ БОТ - ТОЛЬКО ПРИВЕТСТВИЕ ========
+        // ======== ПРОСТОЙ БОТ ========
         class SimpleBot {
             constructor() {
                 this.hasGreeted = {};
@@ -1595,7 +1689,6 @@
                 this.userName = name;
             }
             getResponse(message, chatId) {
-                // Если уже приветствовали в этом чате - молчим
                 if (this.hasGreeted[chatId]) {
                     return null;
                 }
@@ -1643,7 +1736,10 @@
                     state.currentChatId = parsed.currentChatId || null;
                     state.botChatId = parsed.botChatId || null;
                     state.allUsers = parsed.allUsers || [];
-                    state.chats = state.chats.map(c => ({ ...c, folderId: c.folderId || null, pinnedMessages: c.pinnedMessages || [] }));
+                    state.chats = state.chats.map(c => ({ ...c,
+                        folderId: c.folderId || null,
+                        pinnedMessages: c.pinnedMessages || []
+                    }));
                     if (state.bot) {
                         state.bot.setUserName(state.user?.name || 'Пользователь');
                     }
@@ -1794,7 +1890,7 @@
             const results = [];
             const seen = new Set();
 
-            // Поиск пользователей (ВСЕХ зарегистрированных)
+            // Поиск пользователей
             state.allUsers.forEach(user => {
                 if (user.id !== state.user?.id && user.name.toLowerCase().includes(q)) {
                     if (!seen.has(user.id)) {
@@ -1814,7 +1910,7 @@
                 }
             });
 
-            // Поиск каналов (ВСЕХ)
+            // Поиск каналов
             state.chats.forEach(chat => {
                 if (chat.type === 'channel' && chat.name.toLowerCase().includes(q)) {
                     if (!seen.has(chat.id)) {
@@ -1834,7 +1930,7 @@
                 }
             });
 
-            // Поиск групп (ВСЕХ)
+            // Поиск групп
             state.chats.forEach(chat => {
                 if (chat.type === 'group' && chat.name.toLowerCase().includes(q)) {
                     if (!seen.has(chat.id)) {
@@ -1891,7 +1987,8 @@
                     }
 
                     const privateBadge = item.isPrivate ? ' 🔒' : '';
-                    const typeLabel = item.type === 'user' ? '👤' : item.type === 'channel' ? '📢' : item.type === 'group' ? '👥' : '💬';
+                    const typeLabel = item.type === 'user' ? '👤' : item.type === 'channel' ? '📢' : item.type === 'group' ?
+                        '👥' : '💬';
 
                     div.innerHTML = `
                             <div class="sr-avatar" style="background:${item.avatarColor}">${avatarContent}</div>
@@ -1904,10 +2001,8 @@
 
                     div.addEventListener('click', () => {
                         if (item.type === 'user') {
-                            // Находим пользователя и создаём чат
                             const user = state.allUsers.find(u => u.id === item.id);
                             if (user) {
-                                // Проверяем, есть ли уже чат с этим пользователем
                                 const existing = state.chats.find(c =>
                                     c.type === 'chat' &&
                                     c.participants &&
@@ -2033,7 +2128,8 @@
                     lastTime = formatTime(lastMsg.time);
                     if (lastText.length > 30) lastText = lastText.substring(0, 30) + '...';
                 }
-                let avatarContent = chat.avatarImg ? '<img src="' + chat.avatarImg + '" alt="avatar" />' : getChatAvatar(chat);
+                let avatarContent = chat.avatarImg ? '<img src="' + chat.avatarImg + '" alt="avatar" />' :
+                getChatAvatar(chat);
                 const pinnedCount = (chat.pinnedMessages || []).length;
                 div.innerHTML = `
                         <div class="chat-avatar" style="background:${chat.avatarColor || '#2b5278'}">
@@ -2398,7 +2494,6 @@
         }
 
         function processBotResponse(chat, userMessage) {
-            // Бот отвечает только один раз - приветствием
             const response = state.bot.getResponse(userMessage, chat.id);
             if (!response) return;
 
